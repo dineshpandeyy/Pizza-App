@@ -70,10 +70,22 @@ function Header() {
 
 // Menu is parent component for Pizza
 function Menu() {
+  const pizzas = pizzaData
+
   return (
     <main className="menu">
       <h2>Menu</h2>
-      <Pizza
+
+      {pizzas.length > 0 ? (<ul className="pizzas">
+        {
+          pizzas.map((pizza) =>
+            <Pizza pizzaOjb={pizza} key={pizza.name} />
+          )
+        }
+      </ul>
+      ) : <p>We are still working on the menu. Please come back later.</p>}
+
+      {/* <Pizza
         pizzaName="Pizza Spinaci"
         image="pizzas/funghi.jpg"
         ingredients="Tomato, mozarella, and pepperoni"
@@ -87,7 +99,7 @@ function Menu() {
         ingredients="Tomato, mozarella, ham, aragula, and burrata cheese"
         price={10}
         // when ever we need to pass somrthing that is not string we need to enter js mode using {}
-      />
+      /> */}
     </main>
   );
 }
@@ -95,21 +107,24 @@ function Menu() {
 // Pizza is a child components of Menu
 function Pizza(props) {
   console.log(props)
+
+  if (props.pizzaOjb.soldOut) return null;
+
   return (
-    <div className="pizza">
-      <img src={props.image} alt="pizza funghi" />
+    <li className="pizza">
+      <img src={props.pizzaOjb.photoName} alt="pizza funghi" />
       <div>
-        <h3>{props.pizzaName}</h3>
-        <p>{props.ingredients}</p>
-        <p>{props.price+3}</p> 
+        <h3>{props.pizzaOjb.name}</h3>
+        <p>{props.pizzaOjb.ingredients}</p>
+        <p>{props.pizzaOjb.price}</p>
       </div>
-    </div>
+    </li>
   );
 }
 
 function Footer() {
   const hours = new Date().getHours();
-  const openHour = 12
+  const openHour = 10
   const closeHour = 21
   const isOpen = hours >= openHour && hours <= closeHour
   console.log(isOpen)
@@ -119,7 +134,20 @@ function Footer() {
   // }else {
   //   alert("We are currently closed")
   // }
-  return <footer className="footer"> {new Date().toLocaleTimeString()}. We are currently open</footer>
+  return <footer className="footer">
+    {isOpen ? (
+      <Order closeHourProp={closeHour} />
+    ) : <p>We are happy to welcome you between {openHour}:00 and {closeHour}:00 </p>
+    }
+  </footer >
+}
+
+function Order(props) {
+
+  return <div className="order">
+    <p> We are open until {props.closeHourProp}:00. Come Visit Us</p>
+    <button className="btn">Order</button>
+  </div>
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
