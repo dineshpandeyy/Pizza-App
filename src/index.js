@@ -76,13 +76,18 @@ function Menu() {
     <main className="menu">
       <h2>Menu</h2>
 
-      {pizzas.length > 0 ? (<ul className="pizzas">
-        {
-          pizzas.map((pizza) =>
-            <Pizza pizzaOjb={pizza} key={pizza.name} />
-          )
-        }
-      </ul>
+      {pizzas.length > 0 ? (
+        <>
+          <p>Authentic italian cuisine. 6 creative dishes to chose</p>
+
+          <ul className="pizzas">
+            {
+              pizzas.map((pizza) =>
+                <Pizza pizzaOjb={pizza} key={pizza.name} />
+              )
+            }
+          </ul>
+        </>
       ) : <p>We are still working on the menu. Please come back later.</p>}
 
       {/* <Pizza
@@ -105,18 +110,18 @@ function Menu() {
 }
 
 // Pizza is a child components of Menu
-function Pizza({pizzaOjb}) {
+function Pizza({ pizzaOjb }) {
   console.log(pizzaOjb)
 
-  if (pizzaOjb.soldOut) return null;
+  // if (pizzaOjb.soldOut) return null;
 
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaOjb.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaOjb.photoName} alt="pizza funghi" />
       <div>
         <h3>{pizzaOjb.name}</h3>
         <p>{pizzaOjb.ingredients}</p>
-        <p>{pizzaOjb.price}</p>
+        <p>{pizzaOjb.soldOut ? "SOLD OUT" : pizzaOjb.price}</p>
       </div>
     </li>
   );
@@ -136,13 +141,13 @@ function Footer() {
   // }
   return <footer className="footer">
     {isOpen ? (
-      <Order closeHourProp={closeHour} openHourProp={openHour}/>
+      <Order closeHourProp={closeHour} openHourProp={openHour} />
     ) : <p>We are happy to welcome you between {openHour}:00 and {closeHour}:00 </p>
     }
   </footer >
 }
 
-function Order({closeHourProp, openHourProp}) {
+function Order({ closeHourProp, openHourProp }) {
 
   return <div className="order">
     <p> We are open from {openHourProp}:00 to {closeHourProp}:00. Come Visit Us</p>
