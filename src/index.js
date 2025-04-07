@@ -63,7 +63,7 @@ function Header() {
 
   return (
     <header className="header">
-      <h1 style={style} >Fast Pizza Company</h1>
+      <h1 style={style} >Bella Napoli Pizza Company</h1>
     </header>
   )
 }
@@ -78,7 +78,7 @@ function Menu() {
 
       {pizzas.length > 0 ? (
         <>
-          <p>Authentic italian cuisine. 6 creative dishes to chose</p>
+          <p>Authentic Italian cuisine with six creative dishes to choose from.</p>
 
           <ul className="pizzas">
             {
